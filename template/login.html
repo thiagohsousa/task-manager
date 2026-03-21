@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Login Task-Manager</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login Task-Manager</h1>
+        <form action="/login" method="post">
+            <label for="username">Nome do Usuário</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Informe o Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Informe a Senha</label>
+            <input type="password" id="password" name="password" required>
+
+            <div class="buttons">
+                <button type="submit">Entrar</button>
+                <button type="reset">Limpar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
