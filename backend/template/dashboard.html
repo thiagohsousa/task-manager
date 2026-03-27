@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: #0f172a;
+            color: white;
+            position: fixed;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .header h1 {
+            color: #007BFF;
+        }
+
+        .task-box {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f1f5f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: red;
+        }
+
+        .delete-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Meu App</h2>
+</div>
+
+<div class="content">
+
+    <div class="header">
+        <h1>Dashboard</h1>
+        <p>Gerencie suas tarefas 🚀</p>
+    </div>
+
+    <!-- CRIAR -->
+    <div class="task-box">
+        <form action="/tarefa/criar" method="post">
+
+            <input type="text" name="titulo" placeholder="Título..." required>
+
+            <input type="text" name="descricao" placeholder="Descrição..." required>
+
+            <select name="status">
+                <option value="pendente">Pendente</option>
+                <option value="concluido">Concluído</option>
+            </select>
+
+            <input type="hidden" name="usuario_id" value="{{ usuario_id }}">
+
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+
+    <!-- LISTA -->
+    <div class="task-box">
+        <h3>Minhas tarefas</h3>
+
+        <ul>
+            {% for tarefa in tarefas %}
+            <li>
+                {{ tarefa.titulo }} - {{ tarefa.status }}
+
+                <form action="/tarefas/deletar/{{ tarefa.id }}/{{ usuario_id }}" method="post">
+                    <button class="delete-btn">X</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+</html>
