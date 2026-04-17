@@ -4,99 +4,112 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f6f9;
-        }
+ <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+    }
 
-        .sidebar {
-            width: 230px;
-            height: 100vh;
-            background: #0f172a;
-            color: white;
-            position: fixed;
-            padding: 20px;
-        }
+    /* SIDEBAR */
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        background: linear-gradient(180deg, #1e293b, #0f172a);
+        position: fixed;
+        padding: 20px;
+    }
 
-        .sidebar h2 {
-            text-align: center;
-            color: #007BFF;
-        }
+    .sidebar h2 {
+        text-align: center;
+        color: #38bdf8;
+        margin-bottom: 30px;
+    }
 
-        .content {
-            margin-left: 250px;
-            padding: 30px;
-        }
+    .sidebar a {
+        display: block;
+        margin-top: 15px;
+        padding: 12px;
+        background: #1e293b;
+        color: #e2e8f0;
+        text-decoration: none;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+    }
 
-        .header h1 {
-            color: #007BFF;
-        }
+    .sidebar a:hover {
+        background: #38bdf8;
+        color: #0f172a;
+    }
 
-        .task-box {
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-        }
+    /* CONTEÚDO */
+    .content {
+        margin-left: 270px;
+        padding: 40px;
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    h1 {
+        color: #38bdf8;
+    }
 
-        input, select {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+    p {
+        color: #94a3b8;
+    }
 
-        button {
-            padding: 10px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+    /* BOX DO FORM */
+    .task-box {
+        margin-top: 20px;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
 
-        button:hover {
-            background: #0056b3;
-        }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+    input, select {
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        background: #0f172a;
+        color: #e2e8f0;
+        outline: none;
+    }
 
-        li {
-            background: #f1f5f9;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    button {
+        padding: 10px;
+        background: #38bdf8;
+        color: #0f172a;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
 
-        .delete-btn {
-            background: red;
-        }
-
-        .delete-btn:hover {
-            background: darkred;
-        }
-    </style>
+    button:hover {
+        background: #0ea5e9;
+    }
+</style>
 </head>
 
 <body>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
-    <h2>Meu App</h2>
+    <h2>Task Manager</h2>
+
+    <a href="/dashboard/{{ usuario_id }}">Dashboard</a>
+    <a href="/tarefas/{{ usuario_id }}">Minhas tarefas</a>
 </div>
 
+<!-- CONTEÚDO -->
 <div class="content">
 
     <div class="header">
@@ -104,7 +117,7 @@
         <p>Gerencie suas tarefas 🚀</p>
     </div>
 
-    <!-- CRIAR -->
+    <!-- CRIAR TAREFA -->
     <div class="task-box">
         <form action="/tarefa/criar" method="post">
 
@@ -113,32 +126,15 @@
             <input type="text" name="descricao" placeholder="Descrição..." required>
 
             <select name="status">
-                <option value="pendente">Pendente</option>
-                <option value="concluido">Concluído</option>
+                <option value="PENDENTE">Pendente</option>
+                <option value="EM_ANDAMENTO">Em andamento</option>
+                <option value="CONCLUIDA">Concluído</option>
             </select>
 
             <input type="hidden" name="usuario_id" value="{{ usuario_id }}">
 
             <button type="submit">Adicionar</button>
         </form>
-    </div>
-
-    <!-- LISTA -->
-    <div class="task-box">
-        <h3>Minhas tarefas</h3>
-
-        <ul>
-            {% for tarefa in tarefas %}
-            <li>
-                {{ tarefa.titulo }} - {{ tarefa.status }}
-
-                <form action="/tarefas/deletar/{{ tarefa.id }}/{{ usuario_id }}" method="post">
-                    <button class="delete-btn">X</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-
     </div>
 
 </div>
