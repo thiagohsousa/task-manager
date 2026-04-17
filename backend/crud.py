@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Usuario, Task
+from schema import statustask
 
 
 # ------------------ USUÁRIO ------------------
@@ -48,7 +49,7 @@ def deletar_usuario(db: Session, user_id: int):
 
 # ------------------ TAREFAS ------------------
 
-def criar_task(db: Session, titulo: str, descricao: str, status: str, usuario_id: int):
+def criar_task(db: Session, titulo: str, descricao: str, status: statustask, usuario_id: int):
     nova_task = Task(
         titulo=titulo,
         descricao=descricao,

@@ -44,9 +44,12 @@ def login(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
+    print(f"Login attempt for username: '{username}'")
     user = autenticar_usuario(db, username, password)
 
     if user:
+        print(f"Login SUCCESS for user.id: {user.id}")
         return RedirectResponse(url=f"/dashboard/{user.id}", status_code=303)
 
-    return RedirectResponse(url="/login", status_code=303)
+    print("Login FAILED - invalid creds")
+    return RedirectResponse(url="/auth/login?error=1", status_code=303)
