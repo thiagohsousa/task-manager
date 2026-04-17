@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Tarefas</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1e293b, #0f172a);
+            position: fixed;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        .menu-btn {
+            display: block;
+            margin-top: 20px;
+            padding: 12px;
+            background: #1e293b;
+            color: #e2e8f0;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .content {
+            margin-left: 270px;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #38bdf8;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: #1e293b;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .pendente {
+            background: #facc15;
+            color: #000;
+        }
+
+        .andamento {
+            background: #38bdf8;
+            color: #000;
+        }
+
+        .concluida {
+            background: #22c55e;
+            color: #000;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Task Manager</h2>
+
+    <a href="/dashboard/{{ usuario_id }}" class="menu-btn">Dashboard</a>
+</div>
+
+<div class="content">
+    <h1>Minhas tarefas</h1>
+
+    <ul>
+        {% for tarefa in tarefas %}
+        <li>
+            <div>
+                <strong>{{ tarefa.titulo }}</strong><br>
+                <small>{{ tarefa.descricao }}</small>
+            </div>
+
+            <div>
+                {% if tarefa.status.value == "PENDENTE" %}
+                    <span class="status pendente">Pendente</span>
+                {% elif tarefa.status.value == "EM_ANDAMENTO" %}
+                    <span class="status andamento">Em andamento</span>
+                {% elif tarefa.status.value == "CONCLUIDA" %}
+                    <span class="status concluida">Concluída</span>
+                {% endif %}
+
+                <form action="/tarefas/deletar/{{ tarefa.id }}/{{ usuario_id }}" method="post" style="display:inline;">
+                    <button class="delete-btn">X</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
